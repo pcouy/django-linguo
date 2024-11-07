@@ -3,7 +3,7 @@ import copy
 from django.db import models
 from django.db.models.base import ModelBase
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from linguo.exceptions import MultilingualFieldError
 from linguo.managers import MultilingualManager
