@@ -88,7 +88,7 @@ class MultilingualModelBase(ModelBase):
                 if lang_field.verbose_name is not None:
                     # This is to extract the original value that was passed into ugettext_lazy
                     # We do this so that we avoid evaluating the lazy object.
-                    raw_verbose_name = lang_field.verbose_name._proxy____args[0]
+                    raw_verbose_name = lang_field.verbose_name._args[0]
                 else:
                     raw_verbose_name = field.replace('-', ' ')
                 lang_field.verbose_name = _(u'%(verbose_name)s (%(language)s)' %
