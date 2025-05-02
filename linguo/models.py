@@ -187,7 +187,7 @@ class MultilingualModel(models.Model, metaclass=MultilingualModelBase):
             try:
                 self.__dict__[field] = self.__dict__[get_real_field_name(field, language)]
             except KeyError:
-                logger.debug(f"KeyError for {field=} {language=} {get_real_field_name(field, language)=} in {self}")
+                self.__dict__[field] = self.__dict__[f"{field}_{language}"]
         self._force_language = None
 
     def save(self, *args, **kwargs):
