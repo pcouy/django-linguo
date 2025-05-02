@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        {% trans "Edit" %} {{ form.instance.name }}
+    {% else %}
+        {% trans "Create New Product" %}
+    {% endif %} | django-linguo Example
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>
+            {% if form.instance.pk %}
+                {% trans "Edit" %} {{ form.instance.name }}
+            {% else %}
+                {% trans "Create New Product" %}
+            {% endif %}
+        </h2>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% get_current_language as CURRENT_LANGUAGE %}
+        <div class="language-note" style="margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+            <p><strong>{% trans "Note" %}:</strong> {% trans "You are currently editing this product in" %} <strong>{{ CURRENT_LANGUAGE }}</strong>.</p>
+            <p>{% trans "Translatable fields (name, description) will be saved for this language only." %}</p>
+            <p>{% trans "Other fields (price, SKU) are the same across all languages." %}</p>
+        </div>
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <p class="help-text">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="error-message">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn">
+                {% if form.instance.pk %}
+                    {% trans "Update Product" %}
+                {% else %}
+                    {% trans "Create Product" %}
+                {% endif %}
+            </button>
+            <a href="{% url 'product_list' %}" class="btn" style="background-color: #6c757d;">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+{% endblock %} 

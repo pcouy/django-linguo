@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ product.name }} | django-linguo Example{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>{{ product.name }}</h2>
+        <div>
+            <a href="{% url 'product_update' product.pk %}" class="btn">{% trans "Edit" %}</a>
+            <a href="{% url 'product_list' %}" class="btn" style="background-color: #6c757d;">{% trans "Back to List" %}</a>
+        </div>
+    </div>
+
+    <div class="product-detail">
+        <p><strong>{% trans "Description" %}:</strong></p>
+        <p>{{ product.description }}</p>
+        
+        <p><strong>{% trans "Price" %}:</strong> ${{ product.price }}</p>
+        <p><strong>{% trans "SKU" %}:</strong> {{ product.sku }}</p>
+        <p><strong>{% trans "Created" %}:</strong> {{ product.created_at|date:"F j, Y, g:i a" }}</p>
+        <p><strong>{% trans "Last Updated" %}:</strong> {{ product.updated_at|date:"F j, Y, g:i a" }}</p>
+    </div>
+
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+        <h3>{% trans "Translation Information" %}</h3>
+        <p>{% trans "Current Product Fields:" %}</p>
+        <ul>
+            <li><strong>{% trans "Current Language" %}:</strong> {% get_current_language as CURRENT_LANGUAGE %}{{ CURRENT_LANGUAGE }}</li>
+            <li><strong>{% trans "Name" %}:</strong> {{ product.name }}</li>
+            <li><strong>{% trans "Description" %}:</strong> {{ product.description }}</li>
+        </ul>
+        
+        <p>{% trans "Try switching languages using the language selector above to see how the translated fields change!" %}</p>
+    </div>
+{% endblock %} 
