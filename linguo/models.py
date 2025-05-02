@@ -196,7 +196,7 @@ class MultilingualModel(models.Model, metaclass=MultilingualModelBase):
         old_forced_language = self._force_language
         self._force_language = language
         # Set the values
-        for key, val in kwargs.iteritems():
+        for key, val in kwargs.items():
             setattr(self, key, val)  # Set values on the object
         # Now switch back
         self._force_language = old_forced_language
