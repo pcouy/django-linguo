@@ -9,6 +9,9 @@ from linguo.exceptions import MultilingualFieldError
 from linguo.managers import MultilingualManager
 from linguo.utils import get_real_field_name, get_normalized_language, get_current_language
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class MultilingualModelBase(ModelBase):
 
@@ -180,6 +183,11 @@ class MultilingualModel(models.Model, metaclass=MultilingualModelBase):
         # our "proxy" property will prevent the primary language values from being returned.
         self._force_language = get_normalized_language(settings.LANGUAGES[0][0])
         super(MultilingualModel, self).__init__(*args, **kwargs)
+        for field in self._meta.translatable_fields:
+            try:
+                self.__dict__[field] = self.__dict__[get_real_field_name(field, language)]
+            except KeyError:
+                logger.debug(f"KeyError for {field=} {language=} {get_real_field_name(field, language)=} in {self}")
         self._force_language = None
 
     def save(self, *args, **kwargs):
